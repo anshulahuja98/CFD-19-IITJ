@@ -1,0 +1,117 @@
+{
+  "ApplicationName": "candidate",
+  "DisplayName": "Candidate",
+  "Description": "...",
+  "ApplicationRoles": [{
+    "Name": "CandidateNode",
+    "Description": "..."
+  },
+  {
+    "Name": "Admin",
+    "Description": "..."
+  }
+],
+  "Workflows": [{
+    "Name": "candidate",
+    "DisplayName": "Candidate",
+    "Description": "...",
+    "Initiators": ["Admin"],
+    "StartState": "enrolling",
+    "Properties": [
+      {
+        "Name": "State",
+        "DisplayName": "State",
+        "Description": "Holds the state of the contract.",
+        "Type": {
+          "Name": "state"
+        }
+      },
+      
+      {
+        "Name": "Admin",
+        "DisplayName": "Admin",
+        "Description": "...",
+        "Type": {
+          "Name": "Admin"
+        }
+      }
+
+    ],
+    "Constructor": {
+      "Parameters": [
+        {
+          "Name": "admin",
+          "Description": "...",
+          "DisplayName": "Admin",
+          "Type": {
+            "Name": "Admin"
+          }
+        }
+      ]
+    },
+    "Functions": [
+      {
+        "Name": "addCandidate",
+        "DisplayName": "Add Candidate",
+        "Description": "...",
+        "Parameters": [
+          {
+            "Name": "CandidateID",
+            "Description": "...",
+            "DisplayName": "Candidate ID",
+            "Type": {
+              "Name": "int"
+            }
+          },
+          {
+            "Name": "finished",
+            "Description": "...",
+            "DisplayName": "Finished",
+            "Type": {
+              "Name": "bool"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "publishCandidateList",
+        "DisplayName": "Publish Candidate List",
+        "Description": "...",
+        "Parameters": []
+      }
+    
+],
+  "States": [
+    {
+      "Name": "enrolling",
+      "DisplayName": "Enrolling",
+      "Description": "...",
+      "PercentComplete": 40,
+      "Style": "Success",
+      "Transitions": [{
+        "AllowedRoles": ["Admin"],
+        "AllowedInstanceRoles": [],
+        "Description": "...",
+        "Function": "addCandidate",
+        "NextStates": ["enrolling", "enrolled"],
+        "DisplayName": "Enrolling"
+      }]
+    },
+    {
+      "Name": "enrolled",
+      "DisplayName": "Enrolled",
+      "Description": "...",
+      "PercentComplete": 100,
+      "Style": "Success",
+      "Transitions": [{
+        "AllowedRoles": ["Admin"],
+        "AllowedInstanceRoles": [],
+        "Description": "...",
+        "Function": "publishCandidateList",
+        "NextStates": ["enrolled"],
+        "DisplayName": "Enrolled"
+      }]
+    }
+  ]
+}]
+}
