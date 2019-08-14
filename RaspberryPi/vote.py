@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import requests
 import serial
+from subprocess import call
 
 ser = serial.Serial('/dev/ttyS0', 9600, timeout=1)
 headers = {
@@ -19,61 +20,76 @@ headers = {
 }
 
 url = "https://cfd-7lizlp-api.azurewebsites.net/api/v1/contracts/8/actions"
+# string = ser.read(12)
+# while True:
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+
+
+def button_11(channel):
+    payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"101\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
+    print("Hi")
+    GPIO.output(18, GPIO.LOW)
+    call("sudo reboot", shell=True)
+    x = -1
+
+
+def button_12(channel):
+    payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"102\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
+    GPIO.output(18, GPIO.LOW)
+    call("sudo reboot", shell=True)
+    x = -2
+
+
+def button_13(channel):
+    payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"103\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
+
+    GPIO.output(18, GPIO.LOW)
+    call("sudo reboot", shell=True)
+    x = -3
+
+
+def button_15(channel):
+    payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"104\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
+    response = requests.request("POST", url, data=payload, headers=headers)
+    print(response.text)
+    GPIO.output(18, GPIO.LOW)
+    call("sudo reboot", shell=True)
+    print("hello")
+    x = -4
+
+
+GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+GPIO.add_event_detect(11, GPIO.RISING, callback=button_11)
+GPIO.add_event_detect(12, GPIO.RISING, callback=button_12)
+GPIO.add_event_detect(13, GPIO.RISING, callback=button_13)
+GPIO.add_event_detect(15, GPIO.RISING, callback=button_15)
+# string = ser.read(12)
 
 while True:
     string = ser.read(12)
     if len(string) == 0:
         print("Please wave a tag")
-        x = 10
+
     else:
-        while x > 0:
-            string = string[1:11]  # Strip header/trailer
-            print("string", string)
-            GPIO.setup(18, GPIO.OUT)
-            GPIO.output(18, GPIO.HIGH)
+        x = 10
+        # while x >=0:
+        string = string[1:11]  # Strip header/trailer
+        print("string", string)
+        print("Light on")
+        GPIO.setup(18, GPIO.OUT)
+        GPIO.output(18, GPIO.HIGH)
+        message = input("Press enter to quit\n\n")
 
-
-            def button_11(channel):
-                payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"101\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
-                response = requests.request("POST", url, data=payload, headers=headers)
-                print(response.text)
-                GPIO.output(18, GPIO.LOW)
-                x = -1
-
-
-            def button_12(channel):
-                payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"102\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
-                response = requests.request("POST", url, data=payload, headers=headers)
-                print(response.text)
-                GPIO.output(18, GPIO.LOW)
-                x = -2
-
-
-            def button_13(channel):
-                payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"103\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
-                response = requests.request("POST", url, data=payload, headers=headers)
-                print(response.text)
-                GPIO.output(18, GPIO.LOW)
-                x = -3
-
-
-            def button_15(channel):
-                payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"104\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
-                response = requests.request("POST", url, data=payload, headers=headers)
-                print(response.text)
-                GPIO.output(18, GPIO.LOW)
-                x = -4
-
-
-            GPIO.setwarnings(False)
-            GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(11, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-            GPIO.setup(15, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
-            GPIO.add_event_detect(11, GPIO.RISING, callback=button_12)
-            GPIO.add_event_detect(12, GPIO.RISING, callback=button_12)
-            GPIO.add_event_detect(13, GPIO.RISING, callback=button_13)
-            GPIO.add_event_detect(15, GPIO.RISING, callback=button_15)
-            message = input("Press enter to quit\n\n")
+    # string = ser.read(12)
+#    print("11")
