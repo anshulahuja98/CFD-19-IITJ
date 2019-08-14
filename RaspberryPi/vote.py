@@ -24,19 +24,21 @@ while True:
     string = ser.read(12)
     if len(string) == 0:
         print("Please wave a tag")
-    else:
-        string = string[1:11]  # Strip header/trailer
-        print("string", string)
-        GPIO.setup(18, GPIO.OUT)
-        GPIO.output(18, GPIO.HIGH)
         x = 10
+    else:
         while x > 0:
+            string = string[1:11]  # Strip header/trailer
+            print("string", string)
+            GPIO.setup(18, GPIO.OUT)
+            GPIO.output(18, GPIO.HIGH)
+
+
             def button_11(channel):
                 payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"101\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
                 response = requests.request("POST", url, data=payload, headers=headers)
                 print(response.text)
                 GPIO.output(18, GPIO.LOW)
-                x = 1
+                x = -1
 
 
             def button_12(channel):
@@ -44,7 +46,7 @@ while True:
                 response = requests.request("POST", url, data=payload, headers=headers)
                 print(response.text)
                 GPIO.output(18, GPIO.LOW)
-                x = 2
+                x = -2
 
 
             def button_13(channel):
@@ -52,7 +54,7 @@ while True:
                 response = requests.request("POST", url, data=payload, headers=headers)
                 print(response.text)
                 GPIO.output(18, GPIO.LOW)
-                x = 3
+                x = -3
 
 
             def button_15(channel):
@@ -60,7 +62,7 @@ while True:
                 response = requests.request("POST", url, data=payload, headers=headers)
                 print(response.text)
                 GPIO.output(18, GPIO.LOW)
-                x = 4
+                x = -4
 
 
             GPIO.setwarnings(False)
