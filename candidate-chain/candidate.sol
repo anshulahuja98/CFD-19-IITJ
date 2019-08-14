@@ -20,10 +20,7 @@ contract candidate
         Admin = admin;
         State = StateType.enrolling;
     }
-    
-    function publishCandidateList() public returns(CandidateStruct[]  memory CandidateList){
-        // return CandidateList;
-    }
+
     function addCandidate(int CandidateID, bool finished) public {
         CandidateList.push(CandidateStruct(CandidateID));
         if (finished){
@@ -31,6 +28,8 @@ contract candidate
         }
     }   
 
-    
+    function publishCandidateList() public {
+        //return CandidateList;
+    }
 
 }
