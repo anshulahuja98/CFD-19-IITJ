@@ -24,7 +24,8 @@ url = "https://cfd-7lizlp-api.azurewebsites.net/api/v1/contracts/8/actions"
 # while True:
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
-
+GPIO.setup(40, GPIO.OUT)
+GPIO.output(40, GPIO.HIGH)
 
 def button_11(channel):
     payload = "{\r\n  \"workflowFunctionID\": 23,\r\n  \"workflowActionParameters\": [\r\n    {\r\n      \"name\": \"CandidateID\",\r\n      \"value\": \"101\",\r\n      \"workflowFunctionParameterId\": 4\r\n    },\r\n    {\r\n      \"name\": \"finished\",\r\n      \"value\": \"False\",\r\n      \"workflowFunctionParameterId\": 4\r\n    }\r\n  ]\r\n}"
@@ -32,7 +33,7 @@ def button_11(channel):
     print(response.text)
     print("Hi")
     GPIO.output(18, GPIO.LOW)
-    call("sudo reboot", shell=True)
+    call("sudo halt", shell=True)
     x = -1
 
 
@@ -41,7 +42,7 @@ def button_12(channel):
     response = requests.request("POST", url, data=payload, headers=headers)
     print(response.text)
     GPIO.output(18, GPIO.LOW)
-    call("sudo reboot", shell=True)
+    call("sudo halt", shell=True)
     x = -2
 
 
@@ -51,7 +52,7 @@ def button_13(channel):
     print(response.text)
 
     GPIO.output(18, GPIO.LOW)
-    call("sudo reboot", shell=True)
+    call("sudo halt", shell=True)
     x = -3
 
 
@@ -60,7 +61,7 @@ def button_15(channel):
     response = requests.request("POST", url, data=payload, headers=headers)
     print(response.text)
     GPIO.output(18, GPIO.LOW)
-    call("sudo reboot", shell=True)
+    call("sudo halt", shell=True)
     print("hello")
     x = -4
 
