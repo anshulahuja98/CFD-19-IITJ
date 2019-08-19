@@ -2,8 +2,10 @@
 Repository for Microsoft code.fun.do++ project '19
 
 Team Name: Millenium Falcon
+
 College: IIT Jodhpur
-Team: Anshul Ahuja, Siddhant Saoji, Chakshu Gupta
+
+Team: Anshul Ahuja, Siddhant Saoji & Chakshu Gupta
 
 ## Our project consists of 2 broad parts:
 
