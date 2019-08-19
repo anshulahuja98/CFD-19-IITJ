@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 import sqlite3
-
+import requests
 app = Flask(__name__, static_url_path='', static_folder='static')
 
 
@@ -70,19 +70,13 @@ headers = {
     'cache-control': "no-cache"
 }
 
+url = "https://cfd-7lizlp-api.azurewebsites.net/api/v1/contracts/8"
 
-@app.route("/chart", methods=["GET"])
-def chart():
-    with sqlite3.connect("earthquake_data.db") as con:
-        cur = con.cursor()
-        cur.execute("SELECT * FROM Acceleration ")
-        rows = cur.fetchall()
-        print(rows)
-        labels = []
-        values = []
-        for row in rows:
-            values = values + [row[0], ]
-            labels = labels + [row[3], ]
+
+@app.route("/votes", methods=["GET"])
+def votes():
+    response = requests.request("GET", url, headers=headers)
+
     return render_template('chart.html', values=values, labels=labels)
 
 # @app.route("/maps", methods=["GET"])
