@@ -55,29 +55,53 @@ def get():
 #             values = values + [row[0], ]
 #             labels = labels + [row[3], ]
 #     return render_template('chart.html', values=values, labels=labels)
+
+url = "https://cfd-7lizlp-api.azurewebsites.net/api/v1/contracts/8"
+
+payload = ""
 headers = {
     'Content-Type': "application/json",
-    'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6InU0T2ZORlBId0VCb3NIanRyYXVPYlY4NExuWSIsImtpZCI6InU0T2ZORlBId0VCb3NIanRyYXVPYlY4NExuWSJ9.eyJhdWQiOiI1MWMxODZkNy04ODViLTQxNDMtYWZhYS0yODc1OTZkNjg2OGUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wODNiNmQ1Mi0zYzQ3LTRhMGYtOTg2ZC0zNmZkYjBkOWI0YWUvIiwiaWF0IjoxNTY1Nzc3MjQ0LCJuYmYiOjE1NjU3NzcyNDQsImV4cCI6MTU2NTc4MTE0NCwiYWlvIjoiQVNRQTIvOE1BQUFBL3Z0MjNLa2lUOHU2YS9ESDJYenpac3l0eTRWRmhoYXRlZThaWGR5L3VPaz0iLCJhbXIiOlsicHdkIl0sImNfaGFzaCI6ImpkRjY4a3B3RV9yYS1kUkRhVFdMMWciLCJpcGFkZHIiOiIxNC4xMzkuMzcuMTA4IiwibmFtZSI6IkNGRDIiLCJub25jZSI6ImIyOTA4OTRlLTlmYjMtNDk4Yy1iMDkzLTA4MTVlODE2ZDM0YSIsIm9pZCI6ImI5ZTVhNWMyLWNjZmYtNGQ0OS05M2NkLTM2YjU1NzgxZjIwYSIsInN1YiI6ImU4RnhoUllXWXhXVHItU09IVE45em9Nbzg4bkVfWXhXeFVHUE9rMjdweHMiLCJ0aWQiOiIwODNiNmQ1Mi0zYzQ3LTRhMGYtOTg2ZC0zNmZkYjBkOWI0YWUiLCJ1bmlxdWVfbmFtZSI6ImNmZDJAYWh1amEyaWl0amFjLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6ImNmZDJAYWh1amEyaWl0amFjLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6Inp2dDlHbnFlUFVXRXJEdHJqLUd4QUEiLCJ2ZXIiOiIxLjAifQ.RDPdyod1QnQSOBGVGrHdCefLoVwfyyn36qhtnyHT2UtWvEBmr4IvftrxMIxzP2-fw-yUZdFL0ZDSDlerwuRkNO6kZLSVjPZlUYnVwKYFUfdowlTdXzbfxvFQboedeykV-o6GfgoHf9E0Ph94LSlYFlxQ0Hba6SXYcJ0J24YubWpqcZx6qFL3Q7Q_ZgoWtD-PMgy0oqYX-QHDjZzNX2RubkB4xr0m1GG7q16dX-cQB-3_ubnE22tOk5XgTcKHK2imKbY3tZbjJIMomcS6WKw2rYbEdhMRBBuwTE400rZ39l3XgAOO3oOHIPdgH-2MA1FkberBoqrNkSndPr6HSEXI1A",
+    'Authorization': "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImllX3FXQ1hoWHh0MXpJRXN1NGM3YWNRVkduNCIsImtpZCI6ImllX3FXQ1hoWHh0MXpJRXN1NGM3YWNRVkduNCJ9.eyJhdWQiOiI1MWMxODZkNy04ODViLTQxNDMtYWZhYS0yODc1OTZkNjg2OGUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wODNiNmQ1Mi0zYzQ3LTRhMGYtOTg2ZC0zNmZkYjBkOWI0YWUvIiwiaWF0IjoxNTY2MjQzMDY0LCJuYmYiOjE1NjYyNDMwNjQsImV4cCI6MTU2NjI0Njk2NCwiYWlvIjoiQVZRQXEvOE1BQUFBQTNnQ3ZpSmZ6dEdmbkc3M1JPcnpmU1BCelBQU0xiMjlTS0UzY3VqVTJMNWMzQjVGaUFLeThXKzI2eVpsbDZubnhQZm1MRHZ2OTl4U0dHVGVoaVh2Z3RvZmtwZFBIV0tCZmpLRTlKdm5QZU09IiwiYW1yIjpbInB3ZCJdLCJjX2hhc2giOiJPWXRNVzhobGpPUzNaQWpwdE5ieW1BIiwiZW1haWwiOiJhaHVqYS4yQGlpdGouYWMuaW4iLCJmYW1pbHlfbmFtZSI6ImU2YTkzODgxLWUzZTctNGVmOC05YTE2LWFiOTE3MjhiNTdmYiIsImdpdmVuX25hbWUiOiI5MjdhNjRlZS0wNDQ0LTQ2ODEtYWVjZC1hNGE0YjI3ZTc5ZTkiLCJpZHAiOiJsaXZlLmNvbSIsImlwYWRkciI6IjE0LjEzOS4zNy4xMDgiLCJuYW1lIjoiOTI3YTY0ZWUtMDQ0NC00NjgxLWFlY2QtYTRhNGIyN2U3OWU5IGU2YTkzODgxLWUzZTctNGVmOC05YTE2LWFiOTE3MjhiNTdmYiIsIm5vbmNlIjoiMDlhYjkxMGMtYjU2Yy00OGQ0LTliODgtYTI1NmRmYTFjY2M3Iiwib2lkIjoiZTQ1OWUzOTktNWVlZS00YTY3LTllZGMtZjY1MTIwMWRlYTc2Iiwicm9sZXMiOlsiQWRtaW5pc3RyYXRvciJdLCJzdWIiOiJkSmJOMWU1R1JhMzFiREpsT1dLT25vcUljV3dKUHVEYWdJMDFzWTRNR25vIiwidGlkIjoiMDgzYjZkNTItM2M0Ny00YTBmLTk4NmQtMzZmZGIwZDliNGFlIiwidW5pcXVlX25hbWUiOiJsaXZlLmNvbSNhaHVqYS4yQGlpdGouYWMuaW4iLCJ1dGkiOiIxTmx4ZWx6eE5FS0J5bzNKNDdUTUFBIiwidmVyIjoiMS4wIn0.pTr5BvsCtx_nN3QSbbukzoHvOx8tmlZKCqF7iOFE34SFS3ENC2TPOeGU-pTSlEs_3VvdWfVtUGGiVF_h4in8vh1gdxhlQPYojqSVjQjQTiXyVMubd9Xj_QmcpdAo5SvJMLUIZjKv8spLE4S1cY3vi1fVcDTrVExjcEBnw8K82x3Ap1T1LcaZmi88jgbNppIfaqI2Q_rRxnkgaMUanwSFk34vWn7psRX1Z5f5v0TXGwPzdz_yo0VFNXR1ip6XYRiPSWqOtxIVFo6awpKz7Kznb9q0wgwIlPwop-BSxYXSrTw8RZUZ-VQ5RXx3B0NmPHnFRM-HrYNwWLdBqRz2hoCTVg",
     'User-Agent': "PostmanRuntime/7.15.2",
     'Accept': "*/*",
     'Cache-Control': "no-cache",
-    'Postman-Token': "97798d86-a918-4f21-a284-8e69fd71e615,18983160-8229-46e0-960e-64cbe459ddf4",
+    'Postman-Token': "50eca28d-0379-4901-8780-4b3a29ed3010,d8a87e4d-a31b-49e9-9d39-fb65e2502353",
     'Host': "cfd-7lizlp-api.azurewebsites.net",
     'Cookie': "ARRAffinity=ffc5a14e122a3e950d12cd97aa05445285bb2824918c5cf6531cdd92fea0dd08",
     'Accept-Encoding': "gzip, deflate",
-    'Content-Length': "285",
     'Connection': "keep-alive",
     'cache-control': "no-cache"
 }
 
-url = "https://cfd-7lizlp-api.azurewebsites.net/api/v1/contracts/8"
 
+@app.route("/candidates", methods=["GET"])
+def candidates():
+    response = requests.request("GET", url, data=payload, headers=headers)
+    response = response.json()
+    x = response["contractActions"]
+    candidateID = []
+    for k in range(len(x)):
+        z = x[k]
+        if z['userId'] == 1:
+            candidateID.append(z['parameters'][0]['value'])
+    return render_template('candidate.html', candidateId=candidateID)
 
 @app.route("/votes", methods=["GET"])
 def votes():
-    response = requests.request("GET", url, headers=headers)
+    response = requests.request("GET", url, data=payload, headers=headers)
+    response = response.json()
+    x = response["contractActions"]
+    candidateID = {}
+    for k in range(len(x)):
+        z = x[k]
+        if z['userId'] == 1:
+            candidateID[(z['parameters'][0]['value'])] = 0
 
-    return render_template('chart.html', values=values, labels=labels)
+    for kk in range(len(x)):
+        if z['userId'] == 3:
+            candidateID[(z['parameters'][0]['value'])] += 1
+    return render_template('vote.html', candidateId=candidateID)
+
 
 # @app.route("/maps", methods=["GET"])
 # def maps():
