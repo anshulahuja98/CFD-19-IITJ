@@ -84,7 +84,7 @@ def candidates():
         z = x[k]
         if z['userId'] == 1:
             candidateID.append(z['parameters'][0]['value'])
-    return render_template('candidate.html', candidateId=candidateID)
+    return render_template('candidate.html', candidateID=candidateID)
 
 @app.route("/votes", methods=["GET"])
 def votes():
@@ -92,6 +92,7 @@ def votes():
     response = response.json()
     x = response["contractActions"]
     candidateID = {}
+    total = 0
     for k in range(len(x)):
         z = x[k]
         if z['userId'] == 1:
@@ -100,7 +101,18 @@ def votes():
     for kk in range(len(x)):
         if z['userId'] == 3:
             candidateID[(z['parameters'][0]['value'])] += 1
-    return render_template('vote.html', candidateId=candidateID)
+            total += 1
+    return render_template('vote.html', candidateID=candidateID, total=total)
+
+
+@app.route("/info", methods=["GET"])
+def info():
+    with sqlite3.connect("candidateinfo.db") as con:
+        cur = con.cursor()
+        cur.execute("SELECT * FROM Info")
+        rows = cur.fetchall()
+
+    return render_template('info.html', candidateInfo=rows)
 
 
 # @app.route("/maps", methods=["GET"])
