@@ -136,4 +136,4 @@ def info():
 #         # labels = labels + [coord_rows[1], ]
 #     return render_template('maps.html', values=values, labels=labels, coordinates=coord_rows)
 
-app.run(host='0.0.0.0', port=9480, debug=True)
+app.run(host='0.0.0.0', port=9481, debug=True)
