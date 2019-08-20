@@ -34,7 +34,8 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card">
                             <div class="view overlay">
-                                <img src="https://mdbootstrap.com/wp-content/uploads/2017/11/brandflow-tutorial-fb.jpg" class="card-img-top" alt="">
+                                <img src="https://mdbootstrap.com/wp-content/uploads/2017/11/brandflow-tutorial-fb.jpg"
+                                     class="card-img-top" alt="">
                             </div>
                             <div class="card-body">
                                 <h4 class="card-title">{{ id[1] }}</h4>
@@ -44,7 +45,6 @@
                                     <b>Age</b>: {{ id[4] }} <br>
                                     <b>Gender</b>: {{ id[5] }} <br>
                                 </p>
-                                <button class="btn btn-primary btn-md">{{ id[0] }}</button>
                             </div>
 
                         </div>
@@ -86,9 +86,9 @@
     function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
-            ['Candidate ID', 'Vote Count'],
-            {% for id in candidateID %}
-                ['{{ id|string }}', {{ candidateID[id] }}],
+            ['Candidate Name', 'Vote Count'],
+            {% for id in candidateInfo %}
+                ['{{ id[1]|string }}', {{ candidateID[id[0]|string] }}],
             {% endfor %}
         ]);
 
